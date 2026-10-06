@@ -2,13 +2,14 @@ cmake_minimum_required(VERSION 3.18)
 
 project(
   octio
-  VERSION 0.2.2
+  VERSION 0.2.3
   DESCRIPTION "High-performance FDA/E2E ophthalmic OCT I/O"
   LANGUAGES CXX
 )
 
 option(BUILD_SHARED_LIBS "Build octio as a shared library" ON)
-option(OCTIO_BUILD_TESTS "Build C++ and Python tests" ON)
+option(OCTIO_BUILD_TESTS "Build tests" ON)
+option(OCTIO_BUILD_PYTHON_TESTS "Build Python/native-loader integration tests" ON)
 option(OCTIO_BUILD_TOOLS "Build command-line tools" ON)
 option(OCTIO_BUILD_EXAMPLES "Build C++ examples" ON)
 option(OCTIO_BUILD_DOCS "Add Doxygen documentation target" OFF)
@@ -126,7 +127,7 @@ if(OCTIO_BUILD_TESTS)
     )
   endif()
 
-  if(BUILD_SHARED_LIBS AND Python3_Interpreter_FOUND)
+  if(OCTIO_BUILD_PYTHON_TESTS AND BUILD_SHARED_LIBS AND Python3_Interpreter_FOUND)
     add_test(
       NAME octio_python_smoke
       COMMAND

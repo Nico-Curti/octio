@@ -4,8 +4,6 @@
 
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/Nico-Curti/octio.svg?style=plastic)](https://github.com/Nico-Curti/octio/pulls)
 [![GitHub issues](https://img.shields.io/github/issues/Nico-Curti/octio.svg?style=plastic)](https://github.com/Nico-Curti/octio/issues)
-[![Download counter](http://pepy.tech/badge/octio)](http://pepy.tech/count/octio)
-[![Latest Release](https://badge.fury.io/py/octio.svg)](https://pypi.org/project/octio/)
 
 [![GitHub stars](https://img.shields.io/github/stars/Nico-Curti/octio.svg?label=Stars&style=social)](https://github.com/Nico-Curti/octio/stargazers)
 [![GitHub watchers](https://img.shields.io/github/watchers/Nico-Curti/octio.svg?label=Watch&style=social)](https://github.com/Nico-Curti/octio/watchers)

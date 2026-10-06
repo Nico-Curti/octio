@@ -4,7 +4,7 @@ from __future__ import annotations
 
 project = "octio"
 author = "octio contributors"
-release = "0.2.1"
+release = "0.2.3"
 version = release
 
 extensions = [

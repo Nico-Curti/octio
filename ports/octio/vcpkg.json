@@ -1,6 +1,6 @@
 {
   "name": "octio",
-  "version-string": "0.2.2",
+  "version-string": "0.2.3",
   "description": "High-performance FDA/E2E ophthalmic OCT I/O",
   "dependencies": [
     {

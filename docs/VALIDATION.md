@@ -139,7 +139,7 @@ specifications are not available.
 
 ## Editable Python installation regression
 
-Version 0.2.1 adds an explicit regression test for scikit-build-core editable
+Version 0.2.3 adds an explicit regression test for scikit-build-core editable
 installs. The Python module may be imported from the live source tree while the
 shared library is present only in a second CMake install-tree package path. The
 loader searches ``octio.__path__`` and scikit-build-core loader paths before
@@ -150,3 +150,30 @@ The CMake install destination used for Python builds is relative ``octio/`` as
 recommended for ctypes packages by scikit-build-core, so both regular wheels
 and redirect-mode editables expose the compiled library in the package search
 path.
+
+## Windows explicit symbol export regression
+
+Version 0.2.3 removes CMake `WINDOWS_EXPORT_ALL_SYMBOLS` and exports the public
+C and C++ APIs explicitly through `octio/export.hpp`. This avoids CMake's
+`cmake -E __create_def` COFF post-processing path, which is not reliable with
+all combinations of recent CMake and MSVC/Visual Studio releases. Shared-library
+tests on GCC/Clang use hidden-by-default visibility so missing `OCTIO_API`
+annotations are detected during ordinary Linux/macOS builds as well.
+
+The installed-package consumer now calls `e2e_ufloat16_to_float()` instead of
+checking only a header enum, so CI verifies real shared-library linkage.
+
+## CI isolation fixes in 0.2.3
+
+The Windows editable-loader regression test imports the native DLL in a child
+Python process. Windows keeps loaded DLL files locked until the loading process
+terminates, so the parent process waits for the child before deleting the
+temporary installation tree.
+
+The repository style checker scans only project-owned source roots. In
+particular, CI-created trees such as `.vcpkg/` are excluded by construction and
+third-party source formatting can never affect octio style results.
+
+`OCTIO_BUILD_PYTHON_TESTS` can disable Python/native-loader integration tests
+for native package-manager builds. The vcpkg workflow uses this option because
+Python packaging is validated independently by the Python CI matrix.

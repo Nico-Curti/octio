@@ -1,6 +1,6 @@
 {
   "name": "octio-workspace",
-  "version-string": "0.2.2",
+  "version-string": "0.2.3",
   "description": "vcpkg manifest for building octio and future optional dependencies",
   "dependencies": []
 }

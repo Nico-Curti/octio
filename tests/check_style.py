@@ -8,25 +8,35 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_SUFFIXES = {".cpp", ".hpp", ".h", ".py"}
-SKIP_PARTS = {"build", "__pycache__", ".git", ".venv", "venv"}
+SOURCE_ROOTS = ("include", "src", "python", "tests", "examples", "tools", "scripts")
+SKIP_PARTS = {"__pycache__", ".git", ".venv", "venv"}
 MAX_CODE_LINE = 100
 
 
 def source_files() -> list[Path]:
-  """Return source files covered by the repository style policy."""
+  """Return project-owned source files covered by the style policy.
+
+  Only explicit octio source roots are scanned. This deliberately excludes
+  vendored/tooling trees such as ``.vcpkg`` that CI may create inside the
+  repository workspace.
+  """
   files: list[Path] = []
-  for path in ROOT.rglob("*"):
-    if not path.is_file() or path.suffix not in SOURCE_SUFFIXES:
+  for root_name in SOURCE_ROOTS:
+    root = ROOT / root_name
+    if not root.exists():
       continue
-    if any(
-      part in SKIP_PARTS
-      or part.startswith("build")
-      or part.endswith("-build")
-      or part.startswith("cmake-build-")
-      for part in path.relative_to(ROOT).parts
-    ):
-      continue
-    files.append(path)
+    for path in root.rglob("*"):
+      if not path.is_file() or path.suffix not in SOURCE_SUFFIXES:
+        continue
+      if any(
+        part in SKIP_PARTS
+        or part.startswith("build")
+        or part.endswith("-build")
+        or part.startswith("cmake-build-")
+        for part in path.relative_to(ROOT).parts
+      ):
+        continue
+      files.append(path)
   return sorted(files)
 
 

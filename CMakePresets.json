@@ -24,7 +24,8 @@
       "binaryDir": "${sourceDir}/build/vcpkg-release",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-        "VCPKG_MANIFEST_MODE": "ON"
+        "VCPKG_MANIFEST_MODE": "ON",
+        "OCTIO_BUILD_PYTHON_TESTS": "OFF"
       }
     }
   ],

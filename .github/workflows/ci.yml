@@ -137,6 +137,7 @@ jobs:
           -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
           -DVCPKG_MANIFEST_MODE=ON
           -DOCTIO_BUILD_TESTS=ON
+          -DOCTIO_BUILD_PYTHON_TESTS=OFF
       - name: Build vcpkg configuration
         run: cmake --build build-vcpkg --config Release --parallel
       - name: Test vcpkg configuration
