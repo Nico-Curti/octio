@@ -3,19 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#if defined(OCTIO_STATIC_DEFINE)
-  #define OCTIO_API
-#elif defined(_WIN32)
-  #if defined(OCTIO_BUILDING_LIBRARY)
-    #define OCTIO_API __declspec(dllexport)
-  #else
-    #define OCTIO_API __declspec(dllimport)
-  #endif
-#elif defined(__GNUC__) || defined(__clang__)
-  #define OCTIO_API __attribute__((visibility("default")))
-#else
-  #define OCTIO_API
-#endif
+#include "octio/export.hpp"
 
 #ifdef __cplusplus
 extern "C" {

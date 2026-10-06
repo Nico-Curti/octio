@@ -1,9 +1,9 @@
 #include "octio/document.hpp"
 
-#include <cstdint>
+#include <cmath>
 
-/** \brief Verify that the installed CMake package exposes the public API. */
+/** \brief Verify that the installed CMake package links the public API. */
 int main() {
-  const auto format = octio::Format::FDA;
-  return format == octio::Format::FDA ? 0 : 1;
+  const float value = octio::e2e_ufloat16_to_float(0);
+  return std::isfinite(value) ? 0 : 1;
 }

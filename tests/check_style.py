@@ -19,7 +19,10 @@ def source_files() -> list[Path]:
     if not path.is_file() or path.suffix not in SOURCE_SUFFIXES:
       continue
     if any(
-      part in SKIP_PARTS or part.startswith("build")
+      part in SKIP_PARTS
+      or part.startswith("build")
+      or part.endswith("-build")
+      or part.startswith("cmake-build-")
       for part in path.relative_to(ROOT).parts
     ):
       continue

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 
 project(
   octio
-  VERSION 0.2.1
+  VERSION 0.2.2
   DESCRIPTION "High-performance FDA/E2E ophthalmic OCT I/O"
   LANGUAGES CXX
 )
@@ -45,6 +45,12 @@ add_library(
 )
 add_library(octio::octio ALIAS octio)
 
+if(WIN32)
+  # Never use CMake COFF auto-export generation. Public symbols are annotated
+  # explicitly with OCTIO_API in octio/export.hpp.
+  set_target_properties(octio PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS OFF)
+endif()
+
 target_include_directories(
   octio
   PUBLIC
@@ -60,13 +66,19 @@ else()
   target_compile_definitions(octio PUBLIC OCTIO_STATIC_DEFINE)
 endif()
 
+if(BUILD_SHARED_LIBS AND NOT MSVC)
+  set_target_properties(
+    octio
+    PROPERTIES
+      CXX_VISIBILITY_PRESET hidden
+      VISIBILITY_INLINES_HIDDEN YES
+  )
+endif()
+
 if(MSVC)
   target_compile_options(octio PRIVATE /W4 /permissive-)
   if(OCTIO_WARNINGS_AS_ERRORS)
     target_compile_options(octio PRIVATE /WX)
-  endif()
-  if(BUILD_SHARED_LIBS)
-    set_target_properties(octio PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
   endif()
 else()
   target_compile_options(octio PRIVATE -Wall -Wextra -Wpedantic)
