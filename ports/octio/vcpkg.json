@@ -1,0 +1,15 @@
+{
+  "name": "octio",
+  "version-string": "0.2.1",
+  "description": "High-performance FDA/E2E ophthalmic OCT I/O",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}

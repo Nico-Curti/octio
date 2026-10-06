@@ -1,0 +1,73 @@
+[build-system]
+requires = ["scikit-build-core>=1.0"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "octio"
+version = "0.2.1"
+description = "High-performance FDA/E2E ophthalmic OCT I/O with a C++ core"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+  {name = "Nico-Curti"},
+]
+keywords = ["OCT", "FDA", "Topcon", "E2E", "Heidelberg", "ophthalmology"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: C++",
+  "Programming Language :: C++ :: 17",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = []
+
+[project.optional-dependencies]
+arrays = ["numpy>=1.23"]
+images = ["numpy>=1.23", "Pillow>=9"]
+test = ["numpy>=1.23", "Pillow>=9", "pytest>=7"]
+docs = ["Sphinx>=7", "furo>=2024.1.29"]
+all = ["numpy>=1.23", "Pillow>=9"]
+
+[project.scripts]
+octio = "octio.cli:main"
+octio-inspect = "octio.cli:inspect_entrypoint"
+
+[tool.scikit-build]
+minimum-version = "1.0"
+cmake.version = ">=3.18"
+build-dir = "build/{wheel_tag}"
+wheel.packages = ["python/octio"]
+wheel.py-api = "py3"
+wheel.reproducible = true
+sdist.reproducible = true
+sdist.include = [
+  "CMakeLists.txt",
+  "cmake/**",
+  "include/**",
+  "src/**",
+  "python/**",
+  "tests/**",
+  "tools/**",
+  "examples/**",
+  "docs/**",
+  "scripts/**",
+  "vcpkg.json",
+  "CMakePresets.json",
+  "LICENSE",
+  "README.md",
+]
+
+[tool.scikit-build.cmake.define]
+BUILD_SHARED_LIBS = "ON"
+OCTIO_BUILD_TESTS = "OFF"
+OCTIO_BUILD_TOOLS = "OFF"
+OCTIO_BUILD_EXAMPLES = "OFF"
+OCTIO_ENABLE_LTO = "ON"
